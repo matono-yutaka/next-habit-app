@@ -1,0 +1,67 @@
+"use client";
+
+import type { FormEventHandler } from "react";
+import type { Habit } from "../types/habit";
+
+interface HabitFormProps {
+  title: Habit["title"];
+  content: Habit["content"];
+  onTitleChange: (value: string) => void;
+  onContentChange: (value: string) => void;
+  onSubmit: FormEventHandler<HTMLFormElement>;
+  isEditing?: boolean;
+  onCancel?: () => void;
+}
+
+export function HabitForm({
+  title,
+  content,
+  onTitleChange,
+  onContentChange,
+  onSubmit,
+  isEditing = false,
+  onCancel,
+}: HabitFormProps) {
+  return (
+    <form onSubmit={onSubmit} noValidate>
+      <div className="field">
+        <label className="field__label" htmlFor="habit-title">
+          タイトル:
+        </label>
+        <input
+          id="habit-title"
+          className="input"
+          type="text"
+          name="title"
+          autoComplete="off"
+          placeholder="例：毎朝ジョギングする"
+          value={title}
+          onChange={(e) => onTitleChange(e.target.value)}
+        />
+      </div>
+      <div className="field">
+        <label className="field__label" htmlFor="habit-content">
+          内容
+        </label>
+        <textarea
+          id="habit-content"
+          className="textarea"
+          name="content"
+          placeholder="習慣の内容を書きます"
+          value={content}
+          onChange={(e) => onContentChange(e.target.value)}
+        />
+      </div>
+      <div className="form-actions">
+        <button className="btn btn--primary" type="submit">
+          {isEditing ? "更新する" : "追加する"}
+        </button>
+        {isEditing && (
+          <button className="btn btn--ghost" type="button" onClick={onCancel}>
+            キャンセル
+          </button>
+        )}
+      </div>
+    </form>
+  );
+}
