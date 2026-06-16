@@ -10,9 +10,12 @@ export default function Home() {
 
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
-  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editingId, setEditingId] =
+    // nullの可能性があるときは型にもnullが必要
+    useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    // ページリロードを防止（データ保持のため）
     e.preventDefault();
     const trimmed = title.trim();
     if (!trimmed) return;
@@ -47,6 +50,7 @@ export default function Home() {
 
   const handleEdit = (id: string) => {
     const habit = habits.find((h) => h.id === id);
+    // find()は undefined を返す可能性があるためチェックが必要（if文）
     if (habit) {
       setEditingId(id);
       setTitle(habit.title);
@@ -74,6 +78,7 @@ export default function Home() {
           onTitleChange={setTitle}
           onContentChange={setContent}
           onSubmit={handleSubmit}
+          // idではなく「編集中かどうか」だけ渡す
           isEditing={editingId !== null}
           onCancel={handleCancel}
         />
