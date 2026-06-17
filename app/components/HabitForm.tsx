@@ -19,11 +19,11 @@ export function HabitForm({
   onTitleChange,
   onContentChange,
   onSubmit,
-  isEditing = false,
+  isEditing = false, // propsが渡されない場合のデフォルト値
   onCancel,
 }: HabitFormProps) {
   return (
-    <form onSubmit={onSubmit} noValidate>
+    <form onSubmit={onSubmit}>
       <div className="field">
         <label className="field__label" htmlFor="habit-title">
           タイトル:
@@ -33,10 +33,9 @@ export function HabitForm({
           className="input"
           type="text"
           name="title"
-          autoComplete="off"
           placeholder="例：毎朝ジョギングする"
           value={title}
-          onChange={(e) => onTitleChange(e.target.value)}
+          onChange={(e) => onTitleChange(e.target.value)} // 入力された文字列をonTitleChangeに渡す
         />
       </div>
       <div className="field">
@@ -57,7 +56,11 @@ export function HabitForm({
           {isEditing ? "更新する" : "追加する"}
         </button>
         {isEditing && (
-          <button className="btn btn--ghost" type="button" onClick={onCancel}>
+          <button
+            className="btn btn--ghost"
+            type="button" // フォーム送信を防ぐために必要
+            onClick={onCancel}
+          >
             キャンセル
           </button>
         )}

@@ -27,7 +27,7 @@ export function HabitList({ habits, onDelete, onEdit }: HabitListProps) {
             <button
               className="btn btn--ghost"
               type="button"
-              onClick={() => onEdit(habit.id)}
+              onClick={() => onEdit(habit.id)} // クリック時に実行するための無名関数
             >
               編集
             </button>
