@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next Habit App
 
-## Getting Started
+Next.js と TypeScript で作成した簡易習慣管理アプリです。Next.jsとReact学習のために作成しました。
 
-First, run the development server:
+## 概要
+
+- **習慣の追加**
+- **習慣の編集**
+- **習慣の削除**
+- **習慣一覧から詳細ページへの遷移**
+- **ブラウザの localStorage にデータ保存**
+
+サーバーサイドのデータベースは使わず、クライアント側でブラウザストレージに保存する構成です。
+
+## 使用技術
+
+- Next.js 16.2.9
+- React 19.2.4
+- TypeScript
+- Tailwind CSS 4
+- App Router
+
+## 使い方
+
+### 開発サーバー起動
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ブラウザで次の URL を開きます。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 本番ビルド
 
-## Learn More
+```bash
+npm run build
+npm start
+```
 
-To learn more about Next.js, take a look at the following resources:
+## アプリの構成
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `app/page.tsx` - ホームページ。習慣の一覧表示と追加・編集フォームを持つクライアントページ。
+- `app/components/HabitForm.tsx` - 習慣の追加・編集フォームコンポーネント。
+- `app/components/HabitList.tsx` - 習慣リスト表示コンポーネント。
+- `app/habits/[id]/page.tsx` - 習慣の詳細ページ。
+- `app/globals.css` - 全体のスタイル定義。
+- `app/types/habit.ts` - 習慣データの型定義。
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 動作の流れ
 
-## Deploy on Vercel
+1. `app/page.tsx` でブラウザの `localStorage` から保存済み習慣を読み込む。
+2. 習慣を追加・編集・削除すると、`habits` 配列を更新し、`localStorage` に保存する。
+3. タイトルをクリックすると、`app/habits/[id]/page.tsx` で詳細ページへ遷移する。
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 注意点
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `localStorage` に保存されるため、別ブラウザや別端末ではデータは共有されません。
+- ブラウザのストレージを消すとデータは復元できません。
+
+## スクリプト
+
+- `npm run dev` - 開発サーバー起動
+- `npm run build` - 本番ビルド
+- `npm start` - 本番サーバー起動
+- `npm run lint` - ESLint 実行

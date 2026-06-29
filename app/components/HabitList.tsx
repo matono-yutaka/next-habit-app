@@ -1,6 +1,7 @@
 "use client";
 
 import type { Habit } from "../types/habit";
+import Link from "next/link";
 
 interface HabitListProps {
   habits: Habit[];
@@ -21,18 +22,23 @@ export function HabitList({ habits, onDelete, onEdit }: HabitListProps) {
     <ul className="habit-list">
       {habits.map((habit) => (
         <li key={habit.id} className="habit-card">
-          <h3 className="habit-card__title">{habit.title}</h3>
+          <Link
+            href={`/habits/${habit.id}`}
+            className="text-blue-700 hover:underline font-bold"
+          >
+            {habit.title}
+          </Link>
           <p className="habit-card__body">{habit.content}</p>
           <div className="habit-card__actions">
             <button
-              className="btn btn--ghost"
+              className="btn btn--ghost cursor-pointer"
               type="button"
               onClick={() => onEdit(habit.id)} // クリック時に実行するための無名関数
             >
               編集
             </button>
             <button
-              className="btn btn--danger"
+              className="btn btn--danger cursor-pointer"
               type="button"
               onClick={() => onDelete(habit.id)}
             >

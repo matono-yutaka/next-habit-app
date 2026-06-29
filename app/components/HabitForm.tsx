@@ -9,8 +9,8 @@ interface HabitFormProps {
   onTitleChange: (value: string) => void;
   onContentChange: (value: string) => void;
   onSubmit: FormEventHandler<HTMLFormElement>;
-  isEditing?: boolean;
-  onCancel?: () => void;
+  isEditing?: boolean; // 親から毎回渡されてるので「？」はなくてもいいらしい(デフォルト値があるので残す)
+  onCancel?: () => void; // ”
 }
 
 export function HabitForm({
@@ -23,10 +23,10 @@ export function HabitForm({
   onCancel,
 }: HabitFormProps) {
   return (
-    <form onSubmit={onSubmit}>
+    <form className="habitForm" onSubmit={onSubmit}>
       <div className="field">
         <label className="field__label" htmlFor="habit-title">
-          タイトル:
+          タイトル
         </label>
         <input
           id="habit-title"
@@ -36,6 +36,7 @@ export function HabitForm({
           placeholder="例：毎朝ジョギングする"
           value={title}
           onChange={(e) => onTitleChange(e.target.value)} // 入力された文字列をonTitleChangeに渡す
+          required
         />
       </div>
       <div className="field">
@@ -49,15 +50,16 @@ export function HabitForm({
           placeholder="習慣の内容を書きます"
           value={content}
           onChange={(e) => onContentChange(e.target.value)}
+          required
         />
       </div>
       <div className="form-actions">
-        <button className="btn btn--primary" type="submit">
+        <button className="btn btn--primary cursor-pointer" type="submit">
           {isEditing ? "更新する" : "追加する"}
         </button>
         {isEditing && (
           <button
-            className="btn btn--ghost"
+            className="btn btn--ghost cursor-pointer"
             type="button" // フォーム送信を防ぐために必要
             onClick={onCancel}
           >

@@ -13,8 +13,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "習慣管理アプリ",
-  description: "Next.jsの学習用アプリ",
+  title: {
+    default: "習慣管理アプリ",
+    template: "%s | 習慣管理アプリ",
+  },
+  description: "Next.jsの学習用アプリです。",
 };
 
 export default function RootLayout({
@@ -24,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="ja"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
