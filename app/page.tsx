@@ -26,12 +26,14 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    // これが無いと空配列が保存されてしまい、データが消えてしまう。絶対必要！！
     if (!hasLoaded) return;
 
     // habitsが更新されるたびにローカルストレージに保存
     localStorage.setItem("habits", JSON.stringify(habits));
-  }, [habits, hasLoaded]);
+  }, [habits, hasLoaded]); // useEffect内で使用したstateの値は基本記述する
 
+  // これが無いとマウント後、一瞬「習慣はまだありません」が表示されてしまうことがある。
   if (!hasLoaded) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center">
@@ -64,7 +66,7 @@ export default function Home() {
         id: Date.now().toString(),
         title: trimmed,
         content,
-        createdAt: new Date().toISOString(),
+        createdAt: new Date().toISOString(), //localStorageに保存する際に文字列に変換されるため、初めからISO文字列で作成
       };
       // [...habits, newHabit]でも登録できるが、最新のstateを安全に使うため関数形式(prev)で更新
       setHabits((prev) => [...prev, newHabit]);
@@ -116,7 +118,7 @@ export default function Home() {
           onCancel={handleCancel}
         />
       </section>
-      <section className="card" aria-labelledby="list-heading">
+      <section className="card w-full max-w-5xl" aria-labelledby="list-heading">
         <h2 id="list-heading" className="text-2xl font-bold">
           習慣一覧
         </h2>
